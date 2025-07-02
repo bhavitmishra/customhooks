@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
-import Todo from "./components/Todo";
 
 function useTodos(n) {
   const [todos, setTodos] = useState([]);
@@ -25,12 +24,33 @@ function useTodos(n) {
   return { todos, loading };
 }
 
-function App() {
+function Todo() {
+  const { todos, loading } = useTodos(3);
+  if (loading) {
+    console.log("fucked");
+
+    return <div>loading...</div>;
+  }
+
   return (
     <div>
-      <Todo />
+      {todos.map((todo) => (
+        <Track todo={todo} />
+      ))}
     </div>
   );
 }
 
-export default App;
+function Track({ todo }) {
+  return (
+    <div key={todo.userid}>
+      {todo.id}
+      <br />
+      {todo.title}
+      <br />
+      {todo.completed}
+    </div>
+  );
+}
+
+export default Todo;
